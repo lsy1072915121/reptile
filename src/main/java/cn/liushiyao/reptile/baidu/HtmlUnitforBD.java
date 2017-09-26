@@ -22,7 +22,7 @@ import java.util.Map;
 ///////////////关于htmlunit的相关资料，在此站上有些资料，参考了一下：http://www.cnblogs.com/cation/p/3933408.html  
 
 public class HtmlUnitforBD {
-    private int N = 1;// 搜索页数(默认一页)
+    private int N = 10;// 搜索页数(默认一页)
     private String keyW = "";
     private HtmlPage firstBaiduPage;        // 保存第一页搜索结果
     private String format = "";        // Baidu对应每个搜索结果的第一页第二页第三页等等其中包含“&pn=1”,“&pn=2”,“&pn=3”等等，提取该链接并处理可以获取到一个模板，用于定位某页搜索结果
@@ -31,28 +31,25 @@ public class HtmlUnitforBD {
     private KeyResult keyResult;
 
     public KeyResult getQueryResult(){
-
         return keyResult;
-
     }
-
 
     //===================构造函数======================//
     public HtmlUnitforBD ( ) {
         super ( );
     }
 
-    public HtmlUnitforBD ( String keyW ) throws FailingHttpStatusCodeException, MalformedURLException, IOException {
+    public HtmlUnitforBD ( String keyW ) throws FailingHttpStatusCodeException, IOException {
         super ( );
         this.keyW = keyW;
         this.mainFunction ( N , keyW );
     }
 
-    public void mainFunction ( final int n ,
-                               final String keyWord ) throws FailingHttpStatusCodeException, IOException {
+    public void mainFunction ( final int n , final String keyWord )
+            throws FailingHttpStatusCodeException, IOException {
         int x = n;// 页数
         keyResult = new KeyResult ();
-        keyResult.setKeyWord ( "keyWord" );
+        keyResult.setKeyWord ( keyWord );
         Map<String ,String > map  = new HashMap <> (  );
 		/*
          * 1.获取并输出第一页百度查询内容
@@ -98,10 +95,11 @@ public class HtmlUnitforBD {
                 if ( linkHref.length ( ) > 14 & linkText.length ( ) > 2 ) {// 删除某些无效链接，查查看可发现有些无效链接是不包含信息文本的
 //					System.out.println(linkHref + "\n\t\t摘要：" + linkText);
 //                    eachurl.add ( linkHref );// 作为存储手段存储在arrayList里面
-
+                    map.put ( linkText,linkHref);
                 }
             }
         }
+        keyResult.setQueryResult ( map );
     }
 
 

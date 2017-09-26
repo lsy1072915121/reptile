@@ -8,7 +8,7 @@ import java.util.Map;
 
 /**
  * baidu 搜索关键字词条爬虫
- * 目的：爬去百度关键字的以及链接
+ * 目的：百度关键字的以及链接
  *
  *
  */
@@ -16,15 +16,13 @@ import java.util.Map;
 
 public class Baidu
 {
-	
 	public static void main(String[] args) throws Exception {
-		HtmlUnitforBD htmlUnitforBD = new HtmlUnitforBD ("小米");
+		HtmlUnitforBD htmlUnitforBD = new HtmlUnitforBD ("魅族");
 		KeyResult keyResult = htmlUnitforBD.getQueryResult ();
 		Map<String ,String > map =  keyResult.getQueryResult ();
 		Iterator iterator = map.entrySet ().iterator ();
 		for (String key:map.keySet () ){
-			System.out.println ("key"+key+"==>"+map.get ( key ) );
+			System.out.println (key+"==>"+map.get ( key ) );
 		}
 	}
-
 }
